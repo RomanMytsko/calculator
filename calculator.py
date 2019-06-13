@@ -4,21 +4,21 @@ class Calculator:
         self.second_number = second_number
         self.action = action
 
-    def addition(self):
-        result = self.first_number + self.second_number
-        return result
-
-    def subtraction(self):
-        result = self.first_number - self.second_number
-        return result
-
-    def multiplication(self):
-        result = self.first_number * self.second_number
-        return result
-
-    def division(self):
-        result = self.first_number / self.second_number
-        return result
+    # def addition(self):
+    #     result = self.first_number + self.second_number
+    #     return result
+    #
+    # def subtraction(self):
+    #     result = self.first_number - self.second_number
+    #     return result
+    #
+    # def multiplication(self):
+    #     result = self.first_number * self.second_number
+    #     return result
+    #
+    # def division(self):
+    #     result = self.first_number / self.second_number
+    #     return result
 
     def result(self):
         return eval(str(self.first_number) + str(self.action) + str(self.second_number))
