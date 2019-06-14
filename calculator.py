@@ -1,27 +1,26 @@
 class Calculator:
+
     def __init__(self, first_number, second_number, action):
         self.first_number = first_number
         self.second_number = second_number
         self.action = action
 
-    # def addition(self):
-    #     result = self.first_number + self.second_number
-    #     return result
-    #
-    # def subtraction(self):
-    #     result = self.first_number - self.second_number
-    #     return result
-    #
-    # def multiplication(self):
-    #     result = self.first_number * self.second_number
-    #     return result
-    #
-    # def division(self):
-    #     result = self.first_number / self.second_number
-    #     return result
+    def addition(self):
+        return self.first_number + self.second_number
 
-    def result(self):
-        return eval(str(self.first_number) + str(self.action) + str(self.second_number))
+
+    def subtraction(self):
+        return self.first_number - self.second_number
+
+    def multiplication(self):
+        return self.first_number * self.second_number
+
+    def division(self):
+        return self.first_number / self.second_number
+
+
+    # def result(self):
+    #     return eval(str(self.first_number) + str(self.action) + str(self.second_number))
 
 counter = 1
 while counter:
@@ -51,7 +50,16 @@ while counter:
         break
 
 our_example = Calculator(first_number,second_number, action)
-print("Your result is: ", our_example.result())
+
+if our_example.action == "+":
+    result = our_example.addition()
+elif our_example.action == "-":
+    result = our_example.subtraction()
+elif our_example.action == "*":
+    result = our_example.multiplication()
+else:
+    result = our_example.division()
+print("Your result is: ", result)
 
 
 
