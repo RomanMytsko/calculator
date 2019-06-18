@@ -22,34 +22,32 @@ class Calculator:
     # def result(self):
     #     return eval(str(self.first_number) + str(self.action) + str(self.second_number))
 
-counter = 1
-while counter:
-    try:
-        first_number = float (input ("Please enter first number: "))
-        counter = 0
-    except ValueError as mistake:
-        print ("You entered not number, please try again:")
-        counter = 1
-counter = 1
-while counter:
-    try:
-        second_number = float (input ("Please enter second number: "))
-        counter = 0
-    except ValueError as mistake:
-        print ("You entered not number, please try again:")
-        counter = 1
+def check_input_num(count_of_number):
+    print (count_of_number)
+    while ValueError:
+        try:
+            git float_number = float(input())
+            break
+        except ValueError:
+            print ("You entered not number, please try again:")
+    return float_number
+
+
+first_number = check_input_num("Please enter the first number: ")
+second_number = check_input_num("Please enter the second number: ")
+
 
 actions = "+-/*"
-counter = 1
-while counter:
-    action = input ("Please enter action to do ( + or - or * or /): ")
+print("Please enter action to do: ", actions)
+while True:
+    action = input()
     if action not in actions:
         print ("You entered not correct action, please try again:")
-        counter = 1
+        continue
     else:
         break
 
-our_example = Calculator(first_number,second_number, action)
+our_example = Calculator(first_number, second_number, action)
 
 if our_example.action == "+":
     result = our_example.addition()
@@ -60,7 +58,3 @@ elif our_example.action == "*":
 else:
     result = our_example.division()
 print("Your result is: ", result)
-
-
-
-
