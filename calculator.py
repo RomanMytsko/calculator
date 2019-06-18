@@ -26,7 +26,7 @@ def check_input_num(count_of_number):
     print (count_of_number)
     while ValueError:
         try:
-            git float_number = float(input())
+            float_number = float(input())
             break
         except ValueError:
             print ("You entered not number, please try again:")
@@ -58,3 +58,5 @@ elif our_example.action == "*":
 else:
     result = our_example.division()
 print("Your result is: ", result)
+
+
