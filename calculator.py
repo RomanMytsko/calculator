@@ -8,7 +8,6 @@ class Calculator:
     def addition(self):
         return self.first_number + self.second_number
 
-
     def subtraction(self):
         return self.first_number - self.second_number
 
@@ -18,45 +17,41 @@ class Calculator:
     def division(self):
         return self.first_number / self.second_number
 
+    def calculate(self):
+        if self.action == "+":
+            return self.addition()
+        elif self.action == "-":
+            return self.subtraction()
+        elif self.action == "*":
+            return self.multiplication()
+        elif self.action == "/":
+            return self.division()
 
-    # def result(self):
-    #     return eval(str(self.first_number) + str(self.action) + str(self.second_number))
-
-def check_input_num(count_of_number):
-    print (count_of_number)
+def check_input_num(action_description):
+    print (action_description)
     while ValueError:
         try:
             float_number = float(input())
             break
         except ValueError:
-            print ("You entered not number, please try again:")
+            print ("It's not a number please try again:")
     return float_number
-
 
 first_number = check_input_num("Please enter the first number: ")
 second_number = check_input_num("Please enter the second number: ")
-
 
 actions = "+-/*"
 print("Please enter action to do: ", actions)
 while True:
     action = input()
     if action not in actions:
-        print ("You entered not correct action, please try again:")
+        print ("This is not a mathematical action please try again:")
         continue
     else:
         break
 
 our_example = Calculator(first_number, second_number, action)
 
-if our_example.action == "+":
-    result = our_example.addition()
-elif our_example.action == "-":
-    result = our_example.subtraction()
-elif our_example.action == "*":
-    result = our_example.multiplication()
-else:
-    result = our_example.division()
-print("Your result is: ", result)
+print("Your result is: ", our_example.calculate())
 
 
