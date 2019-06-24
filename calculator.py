@@ -29,7 +29,7 @@ class Calculator:
 
 def check_input_num(action_description):
     print (action_description)
-    while ValueError:
+    while True:
         try:
             float_number = float(input())
             break
@@ -56,7 +56,7 @@ print("Please enter action to do: ", actions)
 while True:
     action = input()
     if action not in actions:
-        print ("This is not a mathematical action please try again:")
+        print("This is not a mathematical action please try again:")
         continue
     else:
         break
