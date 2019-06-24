@@ -17,19 +17,23 @@ class Calculator:
     def division(self):
         return self.first_number / self.second_number
 
+    @property
     def calculate(self):
-        if self.action == "+":
+        my_action = self.action
+        if my_action == "+":
             return self.addition()
-        elif self.action == "-":
+        elif my_action == "-":
             return self.subtraction()
-        elif self.action == "*":
+        elif my_action == "*":
             return self.multiplication()
-        elif self.action == "/":
+        elif my_action == "/":
             return self.division()
+
+
 
 def check_input_num(action_description):
     print (action_description)
-    while True:
+    while ValueError:
         try:
             float_number = float(input())
             break
@@ -53,19 +57,21 @@ second_number = check_input_num("Please enter the second number: ")
 
 actions = "+-/*"
 print("Please enter action to do: ", actions)
+
 while True:
     action = input()
     if action not in actions:
-        print("This is not a mathematical action please try again:")
+        print ("This is not a mathematical action please try again:")
         continue
     else:
         break
+
 
 our_example = Calculator(first_number, second_number, action)
 
 
 with open("results.txt","a") as results:
-    results.write(str(our_example.first_number) + " " + str(our_example.action) + " " + str(our_example.second_number) + " = " + str(our_example.calculate()) + "; " + "\n")
+    results.write(str(our_example.first_number) + " " + str(our_example.action) + " " + str(our_example.second_number) + " = " + str(our_example.calculate) + "; " + "\n")
 
 
-print ("Your result is: ", our_example.calculate ())
+print ("Your result is: ", our_example.calculate)
