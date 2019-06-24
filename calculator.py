@@ -37,6 +37,17 @@ def check_input_num(action_description):
             print ("It's not a number please try again:")
     return float_number
 
+print("Do you want to see the last 10 actions? y/n")
+my_choice_of_see_last_options = input()
+if my_choice_of_see_last_options == "y":
+    with open ("results.txt", "r") as results:
+        counter = 1
+        for l in results:
+            print (l)
+            counter += 1
+            if counter > 10:
+                break
+
 first_number = check_input_num("Please enter the first number: ")
 second_number = check_input_num("Please enter the second number: ")
 
@@ -52,6 +63,9 @@ while True:
 
 our_example = Calculator(first_number, second_number, action)
 
-print("Your result is: ", our_example.calculate())
+
+with open("results.txt","a") as results:
+    results.write(str(our_example.first_number) + " " + str(our_example.action) + " " + str(our_example.second_number) + " = " + str(our_example.calculate()) + "; " + "\n")
 
 
+print ("Your result is: ", our_example.calculate ())
