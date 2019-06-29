@@ -8,7 +8,6 @@ class Calculator:
     def addition(self):
         return self.first_number + self.second_number
 
-
     def subtraction(self):
         return self.first_number - self.second_number
 
@@ -19,8 +18,14 @@ class Calculator:
         return self.first_number / self.second_number
 
 
-    # def result(self):
-    #     return eval(str(self.first_number) + str(self.action) + str(self.second_number))
+with open("results.txt", "a+") as results:
+    pass
+print("Do you want to see history? (y/n)")
+wish = input()
+if wish == "y":
+    with open("results.txt", "r") as results:
+        for line in results:
+            print(line)
 
 counter = 1
 while counter:
@@ -49,18 +54,26 @@ while counter:
     else:
         break
 
-our_example = Calculator(first_number,second_number, action)
+our_example = Calculator (first_number, second_number, action)
 
 if our_example.action == "+":
-    result = our_example.addition()
+    result = our_example.addition ()
 elif our_example.action == "-":
-    result = our_example.subtraction()
+    result = our_example.subtraction ()
 elif our_example.action == "*":
-    result = our_example.multiplication()
+    result = our_example.multiplication ()
 else:
-    result = our_example.division()
-print("Your result is: ", result)
+    result = our_example.division ()
+print ("Your result is: ", result)
 
+with open ("results.txt", "a") as results:
+    results.write (str (our_example.first_number) + " " + str (our_example.action) + " " + str (
+        our_example.second_number) + " " + "=" + " " + str (result) + '\n')
 
+with open ("results.txt", "r") as file:
+    lines = file.readlines ()
+    if len (lines) > 10:
+        del lines[0]
 
-
+with open ("results.txt", "w") as file:
+    file.writelines(lines)
