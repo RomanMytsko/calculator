@@ -1,4 +1,5 @@
 class Calculator:
+    actions = ["+", "-", "/", "*"]
 
     def __init__(self, first_number, second_number, action):
         self.first_number = first_number
@@ -17,61 +18,66 @@ class Calculator:
     def division(self):
         return self.first_number / self.second_number
 
-    @property
+    # @property
+    # def actions(self):
+    #     return self.actions
+
     def calculate(self):
-        my_action = self.action
-        if my_action == "+":
+        if self.action == "+":
             return self.addition()
-        elif my_action == "-":
+        elif self.action == "-":
             return self.subtraction()
-        elif my_action == "*":
+        elif self.action == "*":
             return self.multiplication()
-        elif my_action == "/":
+        elif self.action == "/":
             return self.division()
 
 
 
-def check_input_num(action_description):
-    print (action_description)
-    while ValueError:
-        try:
-            float_number = float(input())
-            break
-        except ValueError:
-            print ("It's not a number please try again:")
-    return float_number
+def check_input_num(number):
+    if number.isdigit():
+        return float(number)
+    else:
+        print("Please try again")
+        return False
 
-print("Do you want to see the last 10 actions? y/n")
-my_choice_of_see_last_options = input()
-if my_choice_of_see_last_options == "y":
-    with open ("results.txt", "r") as results:
-        counter = 1
-        for l in results:
-            print (l)
-            counter += 1
-            if counter > 10:
+
+if __name__ == "__main__":
+
+    again = "y"
+    while again == "y":
+
+        print("Please enter the first number: ")
+        while True:
+            first_number = check_input_num(input())
+            if first_number:
+                break
+            else:
+                continue
+
+        print ("Please enter the second number: ")
+        while True:
+            second_number = check_input_num(input())
+            if second_number:
+                break
+            else:
+                continue
+
+
+
+        print ("Please enter action to do: ", Calculator.actions)
+
+        while True:
+            action = input()
+            if action not in Calculator.actions:
+                print("This is not a mathematical action please try again:")
+                continue
+            else:
                 break
 
-first_number = check_input_num("Please enter the first number: ")
-second_number = check_input_num("Please enter the second number: ")
+        our_example = Calculator(first_number, second_number, action)
 
-actions = "+-/*"
-print("Please enter action to do: ", actions)
+        print("Your result is: ", our_example.calculate())
+        print("Do you want to continue? (y/n)")
+        again = (input())
 
-while True:
-    action = input()
-    if action not in actions:
-        print ("This is not a mathematical action please try again:")
-        continue
-    else:
-        break
-
-
-our_example = Calculator(first_number, second_number, action)
-
-
-with open("results.txt","a") as results:
-    results.write(str(our_example.first_number) + " " + str(our_example.action) + " " + str(our_example.second_number) + " = " + str(our_example.calculate) + "; " + "\n")
-
-
-print ("Your result is: ", our_example.calculate)
