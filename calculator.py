@@ -18,9 +18,6 @@ class Calculator:
     def division(self):
         return self.first_number / self.second_number
 
-    # @property
-    # def actions(self):
-    #     return self.actions
 
     def calculate(self):
         if self.action == "+":
@@ -29,9 +26,11 @@ class Calculator:
             return self.subtraction()
         elif self.action == "*":
             return self.multiplication()
-        elif self.action == "/":
+        elif self.action == "/" and self.second_number != 0:
             return self.division()
-
+        elif self.action == "/" and self.second_number == 0:
+            print("It's not possible to divide by zero")
+            return False
 
 
 def check_input_num(number):
@@ -49,23 +48,21 @@ if __name__ == "__main__":
 
         print("Please enter the first number: ")
         while True:
-            first_number = check_input_num(input())
+            first_number = check_input_num(input ())
             if first_number or first_number == 0:
                 break
             else:
                 continue
 
-        print("Please enter the second number: ")
+        print ("Please enter the second number: ")
         while True:
             second_number = check_input_num(input())
-            if second_number:
+            if second_number or second_number == 0:
                 break
             else:
                 continue
 
-
-
-        print ("Please enter action to do: ", Calculator.actions)
+        print ("Please, enter action to do: ", Calculator.actions)
 
         while True:
             action = input()
@@ -77,8 +74,18 @@ if __name__ == "__main__":
 
         our_example = Calculator(first_number, second_number, action)
 
-        print("Your result is: ", round(our_example.calculate(), 4))
+
+        if our_example.calculate():
+            print("Your result is: ", round(our_example.calculate(), 4))
         print("Do you want to continue? (y/n)")
-        again = (input())
+
+        while True:
+            again = (input())
+            if again == "y" or again == "n":
+                break
+            else:
+                print("Try again !")
+                continue
+
 
 
