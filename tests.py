@@ -1,5 +1,5 @@
 from calculator import Calculator, check_input_num
-# from calculator import check_input_num
+
 
 
 def test_addition():
