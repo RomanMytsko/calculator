@@ -18,14 +18,17 @@ class Calculator:
         return self.first_number / self.second_number
 
 
-with open("results.txt", "a+") as results:
-    pass
 print("Do you want to see history? (y/n)")
 wish = input()
 if wish == "y":
-    with open("results.txt", "r") as results:
-        for line in results:
-            print(line)
+    try:
+        with open("results.txt", "r") as results:
+            for line in results:
+                print(line)
+    except IOError as e:
+        print("Nothing to show yet")
+        results = open("results.txt", "w")
+        results.close()
 
 counter = 1
 while counter:
