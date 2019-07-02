@@ -32,7 +32,7 @@ def test_check_input_num():
 
 
 def test_calculate():
-    r = Calculator (3, 4, "+")
+    r = Calculator (3, 3, "+")
     assert r.calculate () == r.addition ()
     r = Calculator (3, 4, "-")
     assert r.calculate () == r.subtraction ()
