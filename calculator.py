@@ -50,12 +50,12 @@ if __name__ == "__main__":
         print("Please enter the first number: ")
         while True:
             first_number = check_input_num(input())
-            if first_number:
+            if first_number or first_number == 0:
                 break
             else:
                 continue
 
-        print ("Please enter the second number: ")
+        print("Please enter the second number: ")
         while True:
             second_number = check_input_num(input())
             if second_number:
@@ -70,14 +70,15 @@ if __name__ == "__main__":
         while True:
             action = input()
             if action not in Calculator.actions:
-                print("This is not a mathematical action please try again:")
+                print("This is not a mathematical action please, try again:")
                 continue
             else:
                 break
 
         our_example = Calculator(first_number, second_number, action)
 
-        print("Your result is: ", our_example.calculate())
+        print("Your result is: ", round(our_example.calculate(), 4))
         print("Do you want to continue? (y/n)")
         again = (input())
+
 
