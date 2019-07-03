@@ -23,16 +23,17 @@ class Calculator:
 
     def calculate(self):
         if self.action == "+":
-            return self.addition()
+            return self.addition ()
         elif self.action == "-":
-            return self.subtraction()
+            return self.subtraction ()
         elif self.action == "*":
-            return self.multiplication()
+            return self.multiplication ()
         elif self.action == "/" and self.second_number != 0:
-            return self.division()
+            return self.division ()
         elif self.action == "/" and self.second_number == 0:
-            print("It's not possible to divide by zero")
+            print ("It's not possible to divide by zero")
             return False
+
 
 def check_input_num(number):
     if number.isdigit():
@@ -41,37 +42,39 @@ def check_input_num(number):
         print("Please try again")
         return False
 
+
 def check_wish(wish):
-    if wish == "y":
+    if wish == "y" and os.path.getsize("results.txt") > 0:
         with open("results.txt", "r") as results:
             for line in results:
                 print(line)
         return False
+    elif wish == "y" and os.path.getsize("results.txt") == 0:
+        print("You have no history")
     elif wish == "n":
         return False
     else:
         print("Try again please! ")
         return True
 
+
 if __name__ == "__main__":
 
-    if not os.path.isfile ("results.txt"):
-        results = open ("results.txt", "w")
-        results.close ()
-
-
+    if not os.path.isfile("/Users/roma/PycharmProjects/Programming on Python 3/venv/results.txt"):
+        results = open("/Users/roma/PycharmProjects/Programming on Python 3/venv/results.txt", "w")
+        results.close()
 
     again = "y"
     while again == "y":
 
-        print ("Do you want to see history? (y/n)")
+        print("Do you want to see history? (y/n)")
         var = 1
         while var:
-            var = check_wish (input ())
+            var = check_wish(input())
 
         print("Please enter the first number: ")
         while True:
-            first_number = check_input_num(input ())
+            first_number = check_input_num(input())
             if first_number or first_number == 0:
                 break
             else:
@@ -85,7 +88,7 @@ if __name__ == "__main__":
             else:
                 continue
 
-        print ("Please, enter action to do: ", Calculator.actions)
+        print("Please, enter action to do: ", Calculator.actions)
 
         while True:
             action = input()
@@ -97,10 +100,22 @@ if __name__ == "__main__":
 
         our_example = Calculator(first_number, second_number, action)
 
-
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
         print("Do you want to continue? (y/n)")
+
+        with open ("results.txt", "a") as results:
+            results.write (str (our_example.first_number) + " " + str (our_example.action) + " " + str (
+                our_example.second_number) + " " + "=" + " " + str (our_example.calculate ()) + '\n')
+
+        with open ("results.txt", "r") as file:
+            lines = file.readlines ()
+            if len (lines) > 10:
+                del lines[0]
+
+        with open ("results.txt", "w") as file:
+            file.writelines (lines)
+
 
         while True:
             again = (input())
@@ -111,17 +126,5 @@ if __name__ == "__main__":
                 continue
 
 
-    our_example = Calculator (first_number, second_number, action)
 
 
-    with open("results.txt", "a") as results:
-        results.write(str(our_example.first_number) + " " + str(our_example.action) + " " + str(
-            our_example.second_number) + " " + "=" + " " + str(our_example.calculate()) + '\n')
-
-    with open("results.txt", "r") as file:
-        lines = file.readlines()
-        if len(lines) > 10:
-            del lines[0]
-
-    with open("results.txt", "w") as file:
-        file.writelines(lines)
