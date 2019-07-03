@@ -1,4 +1,5 @@
 class Calculator:
+    actions = ["+", "-", "/", "*"]
 
     def __init__(self, first_number, second_number, action):
         self.first_number = first_number
@@ -7,7 +8,6 @@ class Calculator:
 
     def addition(self):
         return self.first_number + self.second_number
-
 
     def subtraction(self):
         return self.first_number - self.second_number
@@ -19,48 +19,73 @@ class Calculator:
         return self.first_number / self.second_number
 
 
-    # def result(self):
-    #     return eval(str(self.first_number) + str(self.action) + str(self.second_number))
+    def calculate(self):
+        if self.action == "+":
+            return self.addition()
+        elif self.action == "-":
+            return self.subtraction()
+        elif self.action == "*":
+            return self.multiplication()
+        elif self.action == "/" and self.second_number != 0:
+            return self.division()
+        elif self.action == "/" and self.second_number == 0:
+            print("It's not possible to divide by zero")
+            return False
 
-counter = 1
-while counter:
-    try:
-        first_number = float (input ("Please enter first number: "))
-        counter = 0
-    except ValueError as mistake:
-        print ("You entered not number, please try again:")
-        counter = 1
-counter = 1
-while counter:
-    try:
-        second_number = float (input ("Please enter second number: "))
-        counter = 0
-    except ValueError as mistake:
-        print ("You entered not number, please try again:")
-        counter = 1
 
-actions = "+-/*"
-counter = 1
-while counter:
-    action = input ("Please enter action to do ( + or - or * or /): ")
-    if action not in actions:
-        print ("You entered not correct action, please try again:")
-        counter = 1
+def check_input_num(number):
+    if number.isdigit():
+        return float(number)
     else:
-        break
+        print("Please try again")
+        return False
 
-our_example = Calculator(first_number,second_number, action)
 
-if our_example.action == "+":
-    result = our_example.addition()
-elif our_example.action == "-":
-    result = our_example.subtraction()
-elif our_example.action == "*":
-    result = our_example.multiplication()
-else:
-    result = our_example.division()
-print("Your result is: ", result)
+if __name__ == "__main__":
 
+    again = "y"
+    while again == "y":
+
+        print("Please enter the first number: ")
+        while True:
+            first_number = check_input_num(input ())
+            if first_number or first_number == 0:
+                break
+            else:
+                continue
+
+        print ("Please enter the second number: ")
+        while True:
+            second_number = check_input_num(input())
+            if second_number or second_number == 0:
+                break
+            else:
+                continue
+
+        print ("Please, enter action to do: ", Calculator.actions)
+
+        while True:
+            action = input()
+            if action not in Calculator.actions:
+                print("This is not a mathematical action please, try again:")
+                continue
+            else:
+                break
+
+        our_example = Calculator(first_number, second_number, action)
+
+
+        if our_example.calculate():
+            print("Your result is: ", round(our_example.calculate(), 4))
+        print("Do you want to continue? (y/n)")
+
+        while True:
+            again = (input())
+            if again == "y" or again == "n":
+                break
+            else:
+                print("Try again !")
+                continue
 
 
 
