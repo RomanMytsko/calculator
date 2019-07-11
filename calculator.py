@@ -61,7 +61,8 @@ def check_wish(wish):
 if __name__ == "__main__":
 
     path_dir = str(os.path.dirname(os.path.abspath(__file__)))
-    if not os.path.isfile(path_dir.join('/results.txt')):
+    path_to_results = os.path.isfile(path_dir.join('/results.txt'))
+    if not path_to_results:
         results = open("results.txt", "w")
         results.close()
 
