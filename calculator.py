@@ -60,9 +60,12 @@ def check_wish(wish):
 
 if __name__ == "__main__":
 
-    if not os.path.isfile("/Users/roma/PycharmProjects/Programming on Python 3/venv/results.txt"):
-        results = open("/Users/roma/PycharmProjects/Programming on Python 3/venv/results.txt", "w")
+    path_dir = str(os.path.dirname(os.path.abspath(__file__)))
+    if not os.path.isfile(path_dir.join('/results.txt')):
+        results = open("results.txt", "w")
         results.close()
+
+
 
     again = "y"
     while again == "y":
@@ -124,7 +127,3 @@ if __name__ == "__main__":
             else:
                 print("Try again !")
                 continue
-
-
-
-
