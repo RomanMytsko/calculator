@@ -108,12 +108,14 @@ if __name__ == "__main__":
             print("Your result is: ", round(our_example.calculate(), 4))
         print("Do you want to continue? (y/n)")
 
+
         with open (path_to_results, "a") as results:
-            results.write (str (our_example.first_number) + " " + str (our_example.action) + " " + str (
-                our_example.second_number) + " " + "=" + " " + str (our_example.calculate ()) + '\n')
+            results.write ("{} {} {} = {}".format(str(our_example.first_number), str(our_example.action),
+                            str(our_example.second_number), str(our_example.calculate()) + '\n'))
+
 
         with open (path_to_results, "r") as file:
-            lines = file.readlines ()
+            lines = file.readlines()
             if len (lines) > 10:
                 del lines[0]
 
