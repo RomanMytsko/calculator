@@ -44,12 +44,12 @@ def check_input_num(number):
 
 
 def check_wish(wish):
-    if wish == "y" and os.path.getsize("results.txt") > 0:
-        with open("results.txt", "r") as results:
+    if wish == "y" and os.path.getsize(path_to_results) > 0:
+        with open(path_to_results, "r") as results:
             for line in results:
                 print(line)
         return False
-    elif wish == "y" and os.path.getsize("results.txt") == 0:
+    elif wish == "y" and os.path.getsize(path_to_results) == 0:
         print("You have no history")
     elif wish == "n":
         return False
@@ -61,9 +61,9 @@ def check_wish(wish):
 if __name__ == "__main__":
 
     path_dir = str(os.path.dirname(os.path.abspath(__file__)))
-    path_to_results = os.path.isfile(path_dir.join('/results.txt'))
-    if not path_to_results:
-        results = open("results.txt", "w")
+    path_to_results = path_dir + ('/results.txt')
+    if not os.path.isfile(path_to_results):
+        results = open(path_to_results, "w")
         results.close()
 
 
@@ -108,16 +108,16 @@ if __name__ == "__main__":
             print("Your result is: ", round(our_example.calculate(), 4))
         print("Do you want to continue? (y/n)")
 
-        with open ("results.txt", "a") as results:
+        with open (path_to_results, "a") as results:
             results.write (str (our_example.first_number) + " " + str (our_example.action) + " " + str (
                 our_example.second_number) + " " + "=" + " " + str (our_example.calculate ()) + '\n')
 
-        with open ("results.txt", "r") as file:
+        with open (path_to_results, "r") as file:
             lines = file.readlines ()
             if len (lines) > 10:
                 del lines[0]
 
-        with open ("results.txt", "w") as file:
+        with open (path_to_results, "w") as file:
             file.writelines (lines)
 
 
