@@ -31,17 +31,16 @@ class Calculator:
         elif self.action == "/" and self.second_number != 0:
             return self.division()
         elif self.action == "/" and self.second_number == 0:
-            result = ("It's not possible to divide by zero")
+            result = None
             return result
 
 
 def check_input_num(number):
-    while True:
-        if number.isdigit():
-            return float(number)
-        else:
-            print("Please try again")
-            return False
+    if number.isdigit():
+        return float(number)
+    else:
+        print("Please try again")
+        return False
 
 
 def check_wish(wish):
@@ -76,16 +75,10 @@ if __name__ == "__main__":
             var = check_wish(input())
 
         print("Please enter the first number: ")
-        while True:
+        number = 1
+        while number:
             first_number = check_input_num(input())
-            if first_number or first_number == 0:
-                break
-            else:
-                continue
-
-        while True:
-            first_number = check_input_num(input())
-            if first_number or first_number == 0:
+            if type(first_number) == float:
                 break
             else:
                 continue
@@ -93,7 +86,7 @@ if __name__ == "__main__":
         print("Please enter the second number: ")
         while True:
             second_number = check_input_num(input())
-            if second_number or second_number == 0:
+            if type(second_number) == float:
                 break
             else:
                 continue
@@ -110,20 +103,24 @@ if __name__ == "__main__":
 
         our_example = Calculator(first_number, second_number, action)
 
-        if our_example.second_number == 0 and our_example.action == "/":
-            print(our_example.calculate())
-        else:
+        if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
+            with open(path_to_results, "a") as results:
+                results.write("{} {} {} = {} {}".format(str(our_example.first_number), str(our_example.action),
+                                                        str(our_example.second_number),
+                                                        str(our_example.calculate()), '\n'))
+        else:
+            print("It's not possible to divide by zero!")
 
-        with open(path_to_results, "a") as results:
-            results.write("{} {} {} = {} {}".format(str(our_example.first_number), str(our_example.action),
-                                                    str(our_example.second_number),
-                                                    str(our_example.calculate()), '\n'))
+
 
         with open(path_to_results, "r") as file:
             lines = file.readlines()
             if len(lines) > 10:
                 del lines[0]
+
+        with open(path_to_results, "w") as file:
+            file.writelines(lines)
 
         print("Do you want to continue? (y/n)")
 
