@@ -1,4 +1,5 @@
 import os.path
+import psycopg2
 
 
 class Calculator:
@@ -44,13 +45,9 @@ def check_input_num(number):
 
 
 def check_wish(wish):
-    if wish == "y" and os.path.getsize(path_to_results) > 0:
-        with open(path_to_results, "r") as results:
-            for line in results:
-                print(line)
+    if wish == "y":
+        read_results(table_name)
         return False
-    elif wish == "y" and os.path.getsize(path_to_results) == 0:
-        print("You have no history")
     elif wish == "n":
         return False
     else:
@@ -58,13 +55,86 @@ def check_wish(wish):
         return True
 
 
+def check_table(table_name):
+    connection = psycopg2.connect(user="roma",
+                                  password="thesoprano777",
+                                  host="127.0.0.1",
+                                  port="5432",
+                                  database="calculator_db")
+    cursor = connection.cursor()
+    cursor.execute("select * from information_schema.tables where table_name=%s", (table_name,))
+    result_of_exist_table = bool(cursor.rowcount)
+    cursor.close()
+    connection.close()
+    return result_of_exist_table
+
+
+def create_table(table_name):
+    connection = psycopg2.connect(user="roma",
+                                  password="thesoprano777",
+                                  host="127.0.0.1",
+                                  port="5432",
+                                  database="calculator_db")
+    cursor = connection.cursor()
+    cursor.execute('''CREATE TABLE %s
+                            (action_id SERIAL PRIMARY KEY,
+                             first_number REAL NOT NULL, 
+                             action TEXT NOT NULL,
+                             second_number REAL NOT NULL, 
+                             result REAL NOT NULL);''' % table_name)
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+
+def input_results():
+    connection = psycopg2.connect(user="roma",
+                                  password="thesoprano777",
+                                  host="127.0.0.1",
+                                  port="5432",
+                                  database="calculator_db")
+    cursor = connection.cursor()
+
+    cursor.execute(
+        '''INSERT INTO calculator (first_number, action, second_number, result) VALUES (%s,%s,%s,%s);''',
+        (our_example.first_number, our_example.action, our_example.second_number, round(our_example.calculate(), 4)))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+
+def read_results(table_name):
+    connection = psycopg2.connect(user="roma",
+                                  password="thesoprano777",
+                                  host="127.0.0.1",
+                                  port="5432",
+                                  database="calculator_db")
+    cursor = connection.cursor()
+
+    cursor.execute(
+        '''SELECT * FROM %s''' % table_name)
+    table_records = cursor.fetchall()
+    if len(table_records) > 0:
+        res = []
+        for i in table_records:
+            for t in i:
+                res.append(str(t))
+            res_string = ' '.join(res)
+            print(res_string)
+            res = []
+    else:
+        print("You have no history")
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+
 if __name__ == "__main__":
 
-    path_dir = str(os.path.dirname(os.path.abspath(__file__)))
-    path_to_results = path_dir + ('/results.txt')
-    if not os.path.isfile(path_to_results):
-        results = open(path_to_results, "w")
-        results.close()
+    table_name = "calculator"
+    if not check_table(table_name):
+        create_table(table_name)
 
     again = "y"
     while again == "y":
@@ -105,22 +175,9 @@ if __name__ == "__main__":
 
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
-            with open(path_to_results, "a") as results:
-                results.write("{} {} {} = {} {}".format(str(our_example.first_number), str(our_example.action),
-                                                        str(our_example.second_number),
-                                                        str(our_example.calculate()), '\n'))
+            input_results()
         else:
             print("It's not possible to divide by zero!")
-
-
-
-        with open(path_to_results, "r") as file:
-            lines = file.readlines()
-            if len(lines) > 10:
-                del lines[0]
-
-        with open(path_to_results, "w") as file:
-            file.writelines(lines)
 
         print("Do you want to continue? (y/n)")
 
