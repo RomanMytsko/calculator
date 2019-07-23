@@ -47,7 +47,7 @@ def check_input_num(number):
 
 def check_wish(wish):
     if wish == "y":
-        work_with_base.read_results(connection, table_name)
+        work_with_base.read_results(table_name)
         return False
     elif wish == "n":
         return False
@@ -58,16 +58,11 @@ def check_wish(wish):
 
 if __name__ == "__main__":
 
-    connection = psycopg2.connect(user="roma",
-                                  password="thesoprano777",
-                                  host="127.0.0.1",
-                                  port="5432",
-                                  database="calculator_db")
     table_name = "calculator"
-    work_with_base = Database_work
+    work_with_base = Database_work()
 
-    if not work_with_base.check_table(connection, table_name):
-        work_with_base.create_table(connection, table_name)
+    if not work_with_base.check_table(table_name):
+        work_with_base.create_table(table_name)
 
     again = "y"
     while again == "y":
@@ -108,8 +103,8 @@ if __name__ == "__main__":
 
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
-            work_with_base.input_results(connection, our_example.first_number, our_example.action,
-                                         our_example.second_number, our_example.calculate())
+            work_with_base.input_results(our_example)
+            # work_with_base.our_calc = our_example
         else:
             print("It's not possible to divide by zero!")
 
@@ -117,7 +112,10 @@ if __name__ == "__main__":
 
         while True:
             again = (input())
-            if again == "y" or again == "n":
+            if again == "y":
+                break
+            elif again == "n":
+                work_with_base.close_connection()
                 break
             else:
                 print("Try again !")
