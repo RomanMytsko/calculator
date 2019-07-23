@@ -3,7 +3,14 @@ import psycopg2
 
 class Database_work:
 
-    def create_table(connection, table_name):
+    def __init__(self):
+        self.connection = psycopg2.connect(user="roma",
+                                           password="thesoprano777",
+                                           host="127.0.0.1",
+                                           port="5432",
+                                           database="calculator_db")
+
+    def create_table(self, table_name):
 
         cursor = connection.cursor()
         cursor.execute('''CREATE TABLE %s
@@ -12,32 +19,33 @@ class Database_work:
                                  action TEXT NOT NULL,
                                  second_number REAL NOT NULL, 
                                  result REAL NOT NULL);''' % table_name)
-        connection.commit()
+        self.connection.commit()
         # cursor.close()
         # connection.close()
 
-    def check_table(connection, table_name):
+    def check_table(self, table_name):
 
-        cursor = connection.cursor()
+        cursor = self.connection.cursor()
         cursor.execute("select * from information_schema.tables where table_name=%s", (table_name,))
         result_of_exist_table = bool(cursor.rowcount)
         # cursor.close()
         # connection.close()
         return result_of_exist_table
 
-    def input_results(connection, first_number, action, second_number, calculate):
-        cursor = connection.cursor()
+    def input_results(self, calculator):
+        cursor = self.connection.cursor()
 
         cursor.execute(
             '''INSERT INTO calculator (first_number, action, second_number, result) VALUES (%s,%s,%s,%s);''',
             (
-                first_number, action, second_number, round(calculate, 4)))
-        connection.commit()
+
+                calculator.first_number, calculator.action, calculator.second_number, round(calculator.calculate(), 4)))
+        self.connection.commit()
         # cursor.close()
         # connection.close()
 
-    def read_results(connection, table_name):
-        cursor = connection.cursor()
+    def read_results(self, table_name):
+        cursor = self.connection.cursor()
         cursor.execute(
             '''SELECT * FROM %s''' % table_name)
         table_records = cursor.fetchall()
@@ -51,5 +59,11 @@ class Database_work:
                 res = []
         else:
             print("You have no history")
+
         # cursor.close()
         # connection.close()
+
+    def close_connection(self):
+        cursor = self.connection.cursor()
+        cursor.close()
+        self.connection.close()
