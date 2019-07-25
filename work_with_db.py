@@ -1,14 +1,11 @@
 import psycopg2
+from connection import connection
 
 
 class Database_work:
 
     def __init__(self):
-        self.connection = psycopg2.connect(user="roma",
-                                           password="thesoprano777",
-                                           host="127.0.0.1",
-                                           port="5432",
-                                           database="calculator_db")
+        self.connection = connection
 
     def create_table(self, table_name):
 
