@@ -44,8 +44,7 @@ def check_input_num(number):
         print("Please try again")
         return False
 
-
-def check_wish(wish):
+    # def check_wish(wish):
     if wish == "y":
         work_with_base.read_results(table_name)
         return False

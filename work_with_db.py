@@ -1,11 +1,17 @@
 import psycopg2
-from connection import connection
+from connection import sensetiv_data
+import json
 
 
 class Database_work:
+    connection = psycopg2.connect(user=(json.loads(sensetiv_data))["user"],
+                                  password=(json.loads(sensetiv_data))["password"],
+                                  host="127.0.0.1",
+                                  port="5432",
+                                  database="calculator_db")
 
-    def __init__(self):
-        self.connection = connection
+    # def __init__(self):
+    #     self.connection = connection
 
     def create_table(self, table_name):
 
