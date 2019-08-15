@@ -6,14 +6,13 @@ config = json.loads(sensetiv_data)
 
 
 class Database_work:
-    connection = psycopg2.connect(user=config["user"],
-                                  password=config["password"],
-                                  host=config["host"],
-                                  port=config["port"],
-                                  database="calculator_db")
 
-    # def __init__(self):
-    #     self.connection = connection
+    def __init__(self):
+        self.connection = psycopg2.connect(user=config["user"],
+                                           password=config["password"],
+                                           host=config["host"],
+                                           port=config["port"],
+                                           database="calculator_db")
 
     def create_table(self, table_name):
 
