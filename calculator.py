@@ -47,7 +47,7 @@ def check_input_num(number):
 
 def check_wish(wish):
     if wish == "y":
-        work_with_base.read_results(table_name)
+        cursor.read_results(table_name)
         return False
     elif wish == "n":
         return False
@@ -59,10 +59,10 @@ def check_wish(wish):
 if __name__ == "__main__":
 
     table_name = "calculator"
-    work_with_base = Database_work()
+    cursor = Database_work()
 
-    if not work_with_base.check_table(table_name):
-        work_with_base.create_table(table_name)
+    if not cursor.check_table(table_name):
+        cursor.create_table(table_name)
 
     again = "y"
     while again == "y":
@@ -103,8 +103,8 @@ if __name__ == "__main__":
 
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
-            work_with_base.input_results(our_example)
-            # work_with_base.our_calc = our_example
+            cursor.input_results(our_example)
+            # cursor.our_calc = our_example
         else:
             print("It's not possible to divide by zero!")
 
@@ -115,7 +115,7 @@ if __name__ == "__main__":
             if again == "y":
                 break
             elif again == "n":
-                work_with_base.close_connection()
+                cursor.close_connection()
                 break
             else:
                 print("Try again !")
