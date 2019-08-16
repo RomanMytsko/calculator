@@ -1,6 +1,6 @@
 import os.path
 import psycopg2
-from work_with_db import Database_work
+from db_connections import Database
 
 
 class Calculator:
@@ -59,7 +59,7 @@ def check_wish(wish):
 if __name__ == "__main__":
 
     table_name = "calculator"
-    cursor = Database_work()
+    cursor = Database()
 
     if not cursor.check_table(table_name):
         cursor.create_table(table_name)
