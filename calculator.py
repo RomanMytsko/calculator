@@ -4,7 +4,7 @@ from db_connections import Database
 
 
 class Calculator:
-    actions = ["+", "-", "/", "*"]
+    actions = ['+', '-', '/', '*']
 
     def __init__(self, first_number, second_number, action):
         self.first_number = first_number
@@ -24,15 +24,15 @@ class Calculator:
         return self.first_number / self.second_number
 
     def calculate(self):
-        if self.action == "+":
+        if self.action == '+':
             return self.addition()
-        elif self.action == "-":
+        elif self.action == '-':
             return self.subtraction()
-        elif self.action == "*":
+        elif self.action == '*':
             return self.multiplication()
-        elif self.action == "/" and self.second_number != 0:
+        elif self.action == '/' and self.second_number != 0:
             return self.division()
-        elif self.action == "/" and self.second_number == 0:
+        elif self.action == '/' and self.second_number == 0:
             result = None
             return result
 
@@ -46,33 +46,33 @@ def check_input_num(number):
 
 
 def check_wish(wish):
-    if wish == "y":
+    if wish == 'y':
         cursor.read_results(table_name)
         return False
-    elif wish == "n":
+    elif wish == 'n':
         return False
     else:
-        print("Try again please! ")
+        print('Try again please! ')
         return True
 
 
 if __name__ == "__main__":
 
-    table_name = "calculator"
+    table_name = 'calculator'
     cursor = Database()
 
     if not cursor.check_table(table_name):
         cursor.create_table(table_name)
 
-    again = "y"
-    while again == "y":
+    again = 'y'
+    while again == 'y':
 
-        print("Do you want to see history? (y/n)")
+        print('Do you want to see history? (y/n)')
         var = 1
         while var:
             var = check_wish(input())
 
-        print("Please enter the first number: ")
+        print('Please enter the first number: ')
         number = 1
         while number:
             first_number = check_input_num(input())
@@ -81,7 +81,7 @@ if __name__ == "__main__":
             else:
                 continue
 
-        print("Please enter the second number: ")
+        print('Please enter the second number: ')
         while True:
             second_number = check_input_num(input())
             if type(second_number) == float:
@@ -89,12 +89,12 @@ if __name__ == "__main__":
             else:
                 continue
 
-        print("Please, enter action to do: ", Calculator.actions)
+        print('Please, enter action to do: ', Calculator.actions)
 
         while True:
             action = input()
             if action not in Calculator.actions:
-                print("This is not a mathematical action please, try again:")
+                print('This is not a mathematical action please, try again:')
                 continue
             else:
                 break
@@ -102,21 +102,21 @@ if __name__ == "__main__":
         our_example = Calculator(first_number, second_number, action)
 
         if our_example.calculate():
-            print("Your result is: ", round(our_example.calculate(), 4))
+            print('Your result is: ', round(our_example.calculate(), 4))
             cursor.input_results(our_example)
             # cursor.our_calc = our_example
         else:
             print("It's not possible to divide by zero!")
 
-        print("Do you want to continue? (y/n)")
+        print('Do you want to continue? (y/n)')
 
         while True:
             again = (input())
-            if again == "y":
+            if again == 'y':
                 break
-            elif again == "n":
+            elif again == 'n':
                 cursor.close_connection()
                 break
             else:
-                print("Try again !")
+                print('Try again !')
                 continue

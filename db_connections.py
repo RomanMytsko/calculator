@@ -1,8 +1,6 @@
 import psycopg2
-from connection import sensetiv_data
+from my_connection import config
 import json
-
-config = json.loads(sensetiv_data)
 
 
 class Database:
@@ -24,16 +22,13 @@ class Database:
                                  second_number REAL NOT NULL, 
                                  result REAL NOT NULL);''' % table_name)
         self.connection.commit()
-        # cursor.close()
-        # connection.close()
 
     def check_table(self, table_name):
 
         cursor = self.connection.cursor()
         cursor.execute("select * from information_schema.tables where table_name=%s", (table_name,))
         result_of_exist_table = bool(cursor.rowcount)
-        # cursor.close()
-        # connection.close()
+
         return result_of_exist_table
 
     def input_results(self, calculator):
@@ -45,8 +40,6 @@ class Database:
 
                 calculator.first_number, calculator.action, calculator.second_number, round(calculator.calculate(), 4)))
         self.connection.commit()
-        # cursor.close()
-        # connection.close()
 
     def read_results(self, table_name):
         cursor = self.connection.cursor()
@@ -63,9 +56,6 @@ class Database:
                 res = []
         else:
             print("You have no history")
-
-        # cursor.close()
-        # connection.close()
 
     def close_connection(self):
         cursor = self.connection.cursor()
