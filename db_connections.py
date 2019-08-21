@@ -1,5 +1,5 @@
 import psycopg2
-from my_connection import config
+from connection import config
 import json
 
 
