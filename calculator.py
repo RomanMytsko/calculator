@@ -1,5 +1,6 @@
 import os.path
 import psycopg2
+import re
 from db_connections import Database
 
 
@@ -72,51 +73,40 @@ if __name__ == "__main__":
         while var:
             var = check_wish(input())
 
-        print('Please enter the first number: ')
-        number = 1
-        while number:
-            first_number = check_input_num(input())
-            if type(first_number) == float:
+        result = False
+        while not result:
+
+            my_string = (input("Please input first number, action and second number: "))
+            my_regex = r'(^-?\d+[.]?\d+|^-?\d+)([{}])(-?\d+[.]?\d+$|-?\d+$)'.format(''.join(Calculator.actions))
+            result = re.match(my_regex, my_string)
+
+            if result:
+                first_number = float(result.group(1))
+                action = result.group(2)
+                second_number = float(result.group(3))
                 break
             else:
+                print("Try again")
                 continue
-
-        print('Please enter the second number: ')
-        while True:
-            second_number = check_input_num(input())
-            if type(second_number) == float:
-                break
-            else:
-                continue
-
-        print('Please, enter action to do: ', Calculator.actions)
-
-        while True:
-            action = input()
-            if action not in Calculator.actions:
-                print('This is not a mathematical action please, try again:')
-                continue
-            else:
-                break
 
         our_example = Calculator(first_number, second_number, action)
 
         if our_example.calculate():
-            print('Your result is: ', round(our_example.calculate(), 4))
+            print("Your result is: ", round(our_example.calculate(), 4))
             cursor.input_results(our_example)
-            # cursor.our_calc = our_example
         else:
             print("It's not possible to divide by zero!")
 
-        print('Do you want to continue? (y/n)')
+        print("Do you want to continue? (y/n)")
 
         while True:
             again = (input())
-            if again == 'y':
+            if again == "y":
                 break
-            elif again == 'n':
+            elif again == "n":
                 cursor.close_connection()
                 break
             else:
-                print('Try again !')
+                print("Try again !")
                 continue
+
