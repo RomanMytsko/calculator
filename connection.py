@@ -1,8 +1,9 @@
 import psycopg2
 import json
 import sys
+import os
 
-with open("/Users/roma/PycharmProjects/Calculator/config.json") as file:
+with open(os.environ.get('CONFIG')) as file:
     config = json.load(file)
 
 if 'host' not in config.keys():
