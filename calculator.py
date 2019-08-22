@@ -1,8 +1,10 @@
 import os.path
+import psycopg2
+from db_connections import Database
 
 
 class Calculator:
-    actions = ["+", "-", "/", "*"]
+    actions = ['+', '-', '/', '*']
 
     def __init__(self, first_number, second_number, action):
         self.first_number = first_number
@@ -22,15 +24,15 @@ class Calculator:
         return self.first_number / self.second_number
 
     def calculate(self):
-        if self.action == "+":
+        if self.action == '+':
             return self.addition()
-        elif self.action == "-":
+        elif self.action == '-':
             return self.subtraction()
-        elif self.action == "*":
+        elif self.action == '*':
             return self.multiplication()
-        elif self.action == "/" and self.second_number != 0:
+        elif self.action == '/' and self.second_number != 0:
             return self.division()
-        elif self.action == "/" and self.second_number == 0:
+        elif self.action == '/' and self.second_number == 0:
             result = None
             return result
 
@@ -44,37 +46,33 @@ def check_input_num(number):
 
 
 def check_wish(wish):
-    if wish == "y" and os.path.getsize(path_to_results) > 0:
-        with open(path_to_results, "r") as results:
-            for line in results:
-                print(line)
+    if wish == 'y':
+        cursor.read_results(table_name)
         return False
-    elif wish == "y" and os.path.getsize(path_to_results) == 0:
-        print("You have no history")
-    elif wish == "n":
+    elif wish == 'n':
         return False
     else:
-        print("Try again please! ")
+        print('Try again please! ')
         return True
 
 
 if __name__ == "__main__":
 
-    path_dir = str(os.path.dirname(os.path.abspath(__file__)))
-    path_to_results = path_dir + ('/results.txt')
-    if not os.path.isfile(path_to_results):
-        results = open(path_to_results, "w")
-        results.close()
+    table_name = 'calculator'
+    cursor = Database()
 
-    again = "y"
-    while again == "y":
+    if not cursor.check_table(table_name):
+        cursor.create_table(table_name)
 
-        print("Do you want to see history? (y/n)")
+    again = 'y'
+    while again == 'y':
+
+        print('Do you want to see history? (y/n)')
         var = 1
         while var:
             var = check_wish(input())
 
-        print("Please enter the first number: ")
+        print('Please enter the first number: ')
         number = 1
         while number:
             first_number = check_input_num(input())
@@ -83,7 +81,7 @@ if __name__ == "__main__":
             else:
                 continue
 
-        print("Please enter the second number: ")
+        print('Please enter the second number: ')
         while True:
             second_number = check_input_num(input())
             if type(second_number) == float:
@@ -91,12 +89,12 @@ if __name__ == "__main__":
             else:
                 continue
 
-        print("Please, enter action to do: ", Calculator.actions)
+        print('Please, enter action to do: ', Calculator.actions)
 
         while True:
             action = input()
             if action not in Calculator.actions:
-                print("This is not a mathematical action please, try again:")
+                print('This is not a mathematical action please, try again:')
                 continue
             else:
                 break
@@ -104,30 +102,21 @@ if __name__ == "__main__":
         our_example = Calculator(first_number, second_number, action)
 
         if our_example.calculate():
-            print("Your result is: ", round(our_example.calculate(), 4))
-            with open(path_to_results, "a") as results:
-                results.write("{} {} {} = {} {}".format(str(our_example.first_number), str(our_example.action),
-                                                        str(our_example.second_number),
-                                                        str(our_example.calculate()), '\n'))
+            print('Your result is: ', round(our_example.calculate(), 4))
+            cursor.input_results(our_example)
+            # cursor.our_calc = our_example
         else:
             print("It's not possible to divide by zero!")
 
-
-
-        with open(path_to_results, "r") as file:
-            lines = file.readlines()
-            if len(lines) > 10:
-                del lines[0]
-
-        with open(path_to_results, "w") as file:
-            file.writelines(lines)
-
-        print("Do you want to continue? (y/n)")
+        print('Do you want to continue? (y/n)')
 
         while True:
             again = (input())
-            if again == "y" or again == "n":
+            if again == 'y':
+                break
+            elif again == 'n':
+                cursor.close_connection()
                 break
             else:
-                print("Try again !")
+                print('Try again !')
                 continue
