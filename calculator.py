@@ -2,7 +2,8 @@ import os.path
 import psycopg2
 import re
 from db_connections import Database
-from results_alchemy import session, Results, add_res, read_res
+from db_connector_alchemy import session, add_res, read_res
+from models import Results
 
 
 class Calculator:
