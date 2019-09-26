@@ -2,7 +2,7 @@ import os.path
 import psycopg2
 import re
 from db_connections import Database
-from db_connector_alchemy import session, add_res, read_res
+import db_connector_alchemy as alchemy
 from models import Results
 
 
@@ -50,7 +50,7 @@ def check_input_num(number):
 
 def check_wish(wish):
     if wish == 'y':
-        read_res()
+        alchemy.read_res()
         return False
     elif wish == 'n':
         return False
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
             to_alchemy = Results(first_number, action, second_number, our_example.calculate())
-            add_res(to_alchemy)
+            alchemy.add_res(to_alchemy)
         else:
             print("It's not possible to divide by zero!")
 
@@ -107,4 +107,3 @@ if __name__ == "__main__":
             else:
                 print("Try again !")
                 continue
-
