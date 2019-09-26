@@ -2,6 +2,8 @@ import os.path
 import psycopg2
 import re
 from db_connections import Database
+import db_connector_alchemy as alchemy
+from models import Results
 
 
 class Calculator:
@@ -48,7 +50,7 @@ def check_input_num(number):
 
 def check_wish(wish):
     if wish == 'y':
-        cursor.read_results(table_name)
+        alchemy.read_res()
         return False
     elif wish == 'n':
         return False
@@ -60,10 +62,6 @@ def check_wish(wish):
 if __name__ == "__main__":
 
     table_name = 'calculator'
-    cursor = Database()
-
-    if not cursor.check_table(table_name):
-        cursor.create_table(table_name)
 
     again = 'y'
     while again == 'y':
@@ -93,7 +91,8 @@ if __name__ == "__main__":
 
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
-            cursor.input_results(our_example)
+            to_alchemy = Results(first_number, action, second_number, our_example.calculate())
+            alchemy.add_res(to_alchemy)
         else:
             print("It's not possible to divide by zero!")
 
@@ -104,9 +103,7 @@ if __name__ == "__main__":
             if again == "y":
                 break
             elif again == "n":
-                cursor.close_connection()
                 break
             else:
                 print("Try again !")
                 continue
-
