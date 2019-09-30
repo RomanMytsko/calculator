@@ -12,9 +12,21 @@ class Results(Base):
     action = Column('Action', String)
     second_number = Column('Second number', String)
     result = Column('Results', String)
+    user_id = Column('user_id', Integer)
 
-    def __init__(self, first_number, action, second_number, result):
+    def __init__(self, first_number, action, second_number, result, user_id):
         self.first_number = first_number
         self.action = action
         self.second_number = second_number
         self.result = result
+        self.user_id = user_id
+
+
+class Users(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True)
+    user_name = Column('User_name', String)
+
+    def __init__(self, user_name):
+        self.user_name = user_name

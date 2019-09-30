@@ -3,7 +3,8 @@ import psycopg2
 import re
 from db_connections import Database
 import db_connector_alchemy as alchemy
-from models import Results
+# from models import Results
+from models import Results, Users
 
 
 class Calculator:
@@ -64,7 +65,15 @@ if __name__ == "__main__":
     table_name = 'calculator'
 
     again = 'y'
+
     while again == 'y':
+
+        # create_tables = alchemy.SQLAlchemyDBConnection(alchemy.conn_str)
+        our_user = input("Please enter your name >  ")
+        our_user_id = alchemy.read_user_before_save(our_user)
+        if not our_user_id:
+            our_user_to_table = Users(our_user)
+            alchemy.add_user(our_user_to_table)
 
         print('Do you want to see history? (y/n)')
         var = 1
@@ -91,8 +100,13 @@ if __name__ == "__main__":
 
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
-            to_alchemy = Results(first_number, action, second_number, our_example.calculate())
-            alchemy.add_res(to_alchemy)
+
+            id_to_results = alchemy.read_user(our_user)
+            to_alchemy_results = Results(first_number, action, second_number,
+                                         our_example.calculate(), id_to_results)
+            alchemy.add_res(to_alchemy_results)
+
+
         else:
             print("It's not possible to divide by zero!")
 
