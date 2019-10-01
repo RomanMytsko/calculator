@@ -66,3 +66,13 @@ def read_user(our_user):
             if our_user == user.user_name:
                 id_to_results = user.id
                 return id_to_results
+
+
+def update_counter(our_user_id):
+    if our_user_id:
+        with SQLAlchemyDBConnection(conn_str) as db:
+            users = db.session.query(Users).get(our_user_id)
+            users.counter += 1
+            db.session.commit()
+
+

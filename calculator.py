@@ -72,8 +72,10 @@ if __name__ == "__main__":
         our_user = input("Please enter your name >  ")
         our_user_id = alchemy.read_user_before_save(our_user)
         if not our_user_id:
-            our_user_to_table = Users(our_user)
+            our_user_to_table = Users(our_user, 1)
             alchemy.add_user(our_user_to_table)
+        else:
+            alchemy.update_counter(our_user_id)
 
         print('Do you want to see history? (y/n)')
         var = 1

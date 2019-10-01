@@ -27,6 +27,8 @@ class Users(Base):
 
     id = Column(Integer, primary_key=True)
     user_name = Column('User_name', String)
+    counter = Column('Counter', Integer)
 
-    def __init__(self, user_name):
+    def __init__(self, user_name, counter):
         self.user_name = user_name
+        self.counter = counter
