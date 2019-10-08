@@ -29,24 +29,25 @@ def read_res():
         results = db.session.query(Results).all()
         for result in results:
             print(str(result.id) + '.', result.first_number, result.action, result.second_number, ' = ', result.result,
-                  '_____', 'user >', result.user_id)
+                  '   ', 'user >', result.user_id)
 
 
-def add_res(results):
-    with SQLAlchemyDBConnection(conn_str) as db:
-        db.session.add(results)
-        db.session.commit()
+class AlchemyActions:
 
+    def __init__(self):
+        with SQLAlchemyDBConnection(conn_str) as db:
+            self.db = db
 
-def add_user(user):
-    with SQLAlchemyDBConnection(conn_str) as db:
-        db.session.add(user)
-        db.session.commit()
+    def add_res(self, results):
+        self.db.session.add(results)
+        self.db.session.commit()
 
+    def add_user(self, user):
+        self.db.session.add(user)
+        self.db.session.commit()
 
-def read_user_before_save(our_user):
-    with SQLAlchemyDBConnection(conn_str) as db:
-        users = db.session.query(Users).all()
+    def read_user_before_save(self, our_user):
+        users = self.db.session.query(Users).all()
         if len(users) > 0:
             for user in users:
                 if our_user == user.user_name:
@@ -58,21 +59,14 @@ def read_user_before_save(our_user):
             our_user_id = 0
         return our_user_id
 
-
-def read_user(our_user):
-    with SQLAlchemyDBConnection(conn_str) as db:
-        users = db.session.query(Users).all()
-        for user in users:
+    def read_user(self, our_user):
+        for user in self.db.session.query(Users).all():
             if our_user == user.user_name:
                 id_to_results = user.id
                 return id_to_results
 
-
-def update_counter(our_user_id):
-    if our_user_id:
-        with SQLAlchemyDBConnection(conn_str) as db:
-            users = db.session.query(Users).get(our_user_id)
+    def update_counter(self, our_user_id):
+        if our_user_id:
+            users = self.db.session.query(Users).get(our_user_id)
             users.counter += 1
-            db.session.commit()
-
-
+            self.db.session.commit()
