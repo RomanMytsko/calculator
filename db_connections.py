@@ -20,7 +20,9 @@ class Database:
                                  first_number REAL NOT NULL, 
                                  action TEXT NOT NULL,
                                  second_number REAL NOT NULL, 
-                                 result REAL NOT NULL);''' % table_name)
+                                 result REAL NOT NULL,
+                                 user_id INTEGER );
+                                 ''' % table_name)
         self.connection.commit()
 
     def check_table(self, table_name):
