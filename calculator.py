@@ -1,7 +1,7 @@
 import os.path
 import psycopg2
 import re
-import db_connector_alchemy as alchemy
+import db_connector_alchemy as session
 from models import Results, Users
 
 
@@ -49,7 +49,7 @@ def check_input_num(number):
 
 def check_wish(wish):
     if wish == 'y':
-        alchemy.read_res()
+        session.read_res()
         return False
     elif wish == 'n':
         return False
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     while again == 'y':
 
-        alchemy_actions = alchemy.AlchemyActions()
+        alchemy_actions = session.AlchemyActions()
         our_user = input("Please enter your name >  ")
         our_user_id = alchemy_actions.read_user_before_save(our_user)
         if not our_user_id:
