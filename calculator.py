@@ -104,6 +104,7 @@ if __name__ == "__main__":
             id_to_results = alchemy_actions.read_user(our_user)
             to_alchemy_results = Results(first_number, action, second_number,
                                          our_example.calculate(), id_to_results)
+
             alchemy_actions.add_res(to_alchemy_results)
         else:
             print("It's not possible to divide by zero!")

@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer, Date, create_engine
+from sqlalchemy import Column, String, Integer, Date, create_engine, ForeignKey
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -12,7 +13,8 @@ class Results(Base):
     action = Column('Action', String)
     second_number = Column('Second number', String)
     result = Column('Results', String)
-    user_id = Column('user_id', Integer)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship("Users", backref='calculator_results')
 
     def __init__(self, first_number, action, second_number, result, user_id):
         self.first_number = first_number
