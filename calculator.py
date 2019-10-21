@@ -58,6 +58,24 @@ def check_wish(wish):
         return True
 
 
+def our_data():
+    result = False
+    while not result:
+        my_string = (input("Please input first number, action and second number: "))
+        my_regex = r'(^-?\d+[.]?\d+|^-?\d+)([{}])(-?\d+[.]?\d+$|-?\d+$)'.format(''.join(Calculator.actions))
+        result = re.match(my_regex, my_string)
+
+        if result:
+            first_number = float(result.group(1))
+            action = result.group(2)
+            second_number = float(result.group(3))
+            break
+        else:
+            print("Try again")
+            continue
+    return first_number, second_number, action
+
+
 if __name__ == "__main__":
 
     table_name = 'calculator'
@@ -80,22 +98,7 @@ if __name__ == "__main__":
         while var:
             var = check_wish(input())
 
-        result = False
-        while not result:
-
-            my_string = (input("Please input first number, action and second number: "))
-            my_regex = r'(^-?\d+[.]?\d+|^-?\d+)([{}])(-?\d+[.]?\d+$|-?\d+$)'.format(''.join(Calculator.actions))
-            result = re.match(my_regex, my_string)
-
-            if result:
-                first_number = float(result.group(1))
-                action = result.group(2)
-                second_number = float(result.group(3))
-                break
-            else:
-                print("Try again")
-                continue
-
+        first_number, second_number, action = our_data()
         our_example = Calculator(first_number, second_number, action)
 
         if our_example.calculate():
