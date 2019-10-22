@@ -71,6 +71,12 @@ def our_data(my_string):
         print("Try again")
         return False
 
+def get_id_by_username(our_user):
+    return alchemy_actions.read_user(our_user)
+
+def printing_sum_of_user_actions(alchemy_actions, our_user):
+    return alchemy_actions.printing_sum_of_user_actions(our_user)
+
 
 if __name__ == "__main__":
 
@@ -81,6 +87,7 @@ if __name__ == "__main__":
 
         alchemy_actions = session.AlchemyActions()
         our_user = input("Please enter your name >  ")
+        printing_sum_of_user_actions(alchemy_actions, our_user)
         our_user_id = alchemy_actions.read_user_before_save(our_user)
         if not our_user_id:
             our_user_to_table = Users(our_user, 1)
@@ -107,7 +114,8 @@ if __name__ == "__main__":
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
 
-            id_to_results = alchemy_actions.read_user(our_user)
+            id_to_results = get_id_by_username(our_user)
+
             to_alchemy_results = Results(first_number, action, second_number,
                                          our_example.calculate(), id_to_results)
 
