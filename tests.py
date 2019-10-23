@@ -59,6 +59,8 @@ def test_regex():
     assert calculator.our_data('0jhg') == (False)
 
 
+
+
 #
 # @patch('db_connector_alchemy.AlchemyActions.read_user')
 # def test_get_id_by_username(read_user):
@@ -75,3 +77,9 @@ def test_printing_sum_of_user_actions(print_string):
     alchemy_actions = session.AlchemyActions()
     r = calculator.printing_sum_of_user_actions(alchemy_actions, 'roman')
     assert r == ' you did 39 actions before!'
+
+@patch('calculator.our_user')
+def test_our_user(some_text):
+    calculator.our_user.return_value = 'roman'
+    our_user = calculator.our_user()
+    assert our_user == 'roman'

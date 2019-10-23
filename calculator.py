@@ -58,6 +58,11 @@ def check_wish(wish):
         return True
 
 
+def our_user():
+    our_user = input("Please enter your name >  ")
+    return our_user
+
+
 def our_data(my_string):
     my_regex = r'(^-?\d+[.]?\d+|^-?\d+)([{}])(-?\d+[.]?\d+$|-?\d+$)'.format(''.join(Calculator.actions))
     result = re.match(my_regex, my_string)
@@ -86,7 +91,7 @@ if __name__ == "__main__":
     while again == 'y':
 
         alchemy_actions = session.AlchemyActions()
-        our_user = input("Please enter your name >  ")
+        our_user = our_user()
         printing_sum_of_user_actions(alchemy_actions, our_user)
         our_user_id = alchemy_actions.read_user_before_save(our_user)
         if not our_user_id:
