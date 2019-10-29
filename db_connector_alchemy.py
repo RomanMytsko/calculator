@@ -71,7 +71,7 @@ class AlchemyActions:
             users.counter += 1
             self.db.session.commit()
 
-    def printing_sum_of_user_actions(self, our_user):
+    def output_user_actions_count(self, our_user):
         var = False
         for user in self.db.session.query(Users).all():
             if our_user == user.user_name:

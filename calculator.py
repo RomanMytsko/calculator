@@ -58,12 +58,12 @@ def check_wish(wish):
         return True
 
 
-def our_user():
+def user_input():
     our_user = input("Please enter your name >  ")
     return our_user
 
 
-def our_data(my_string):
+def parse_expression(my_string):
     my_regex = r'(^-?\d+[.]?\d+|^-?\d+)([{}])(-?\d+[.]?\d+$|-?\d+$)'.format(''.join(Calculator.actions))
     result = re.match(my_regex, my_string)
 
@@ -76,11 +76,13 @@ def our_data(my_string):
         print("Try again")
         return False
 
+
 def get_id_by_username(our_user):
     return alchemy_actions.read_user(our_user)
 
-def printing_sum_of_user_actions(alchemy_actions, our_user):
-    return alchemy_actions.printing_sum_of_user_actions(our_user)
+
+def output_user_actions_count(alchemy_actions, our_user):
+    return alchemy_actions.output_user_actions_count(our_user)
 
 
 if __name__ == "__main__":
@@ -91,8 +93,8 @@ if __name__ == "__main__":
     while again == 'y':
 
         alchemy_actions = session.AlchemyActions()
-        our_user = our_user()
-        printing_sum_of_user_actions(alchemy_actions, our_user)
+        our_user = user_input()
+        output_user_actions_count(alchemy_actions, our_user)
         our_user_id = alchemy_actions.read_user_before_save(our_user)
         if not our_user_id:
             our_user_to_table = Users(our_user, 1)
@@ -108,8 +110,8 @@ if __name__ == "__main__":
         first_number = False
         while not first_number:
             my_string = input()
-            if our_data(my_string):
-                first_number, second_number, action = our_data(my_string)
+            if parse_expression(my_string):
+                first_number, second_number, action = parse_expression(my_string)
                 break
             else:
                 continue

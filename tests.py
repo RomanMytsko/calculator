@@ -71,15 +71,15 @@ def test_regex():
 #     # assert res == 100500
 
 
-@patch('db_connector_alchemy.AlchemyActions.printing_sum_of_user_actions')
-def test_printing_sum_of_user_actions(print_string):
+@patch('db_connector_alchemy.AlchemyActions.utput_user_actions_count')
+def output_user_actions_count(print_string):
     print_string.return_value = ' you did 39 actions before!'
     alchemy_actions = session.AlchemyActions()
     r = calculator.printing_sum_of_user_actions(alchemy_actions, 'roman')
     assert r == ' you did 39 actions before!'
 
-@patch('calculator.our_user')
-def test_our_user(some_text):
+@patch('calculator.our_user_string.our_user')
+def test_user_input(some_text):
     calculator.our_user.return_value = 'roman'
     our_user = calculator.our_user()
     assert our_user == 'roman'
