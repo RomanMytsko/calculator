@@ -70,3 +70,16 @@ class AlchemyActions:
             users = self.db.session.query(Users).get(our_user_id)
             users.counter += 1
             self.db.session.commit()
+
+    def output_user_actions_count(self, our_user):
+        var = False
+        for user in self.db.session.query(Users).all():
+            if our_user == user.user_name:
+                str_to_print = " you did {} actions before!".format(user.counter)
+                print(our_user, str_to_print)
+                var = True
+        if not var:
+            str_to_print = ", you didn't do any actions before!"
+            print(our_user, str_to_print)
+        return str_to_print
+

@@ -58,16 +58,43 @@ def check_wish(wish):
         return True
 
 
+def user_input():
+    our_user = input("Please enter your name >  ")
+    return our_user
+
+
+def parse_expression(my_string):
+    my_regex = r'(^-?\d+[.]?\d+|^-?\d+)([{}])(-?\d+[.]?\d+$|-?\d+$)'.format(''.join(Calculator.actions))
+    result = re.match(my_regex, my_string)
+
+    if result:
+        first_number = float(result.group(1))
+        action = result.group(2)
+        second_number = float(result.group(3))
+        return first_number, second_number, action
+    else:
+        print("Try again")
+        return False
+
+
+def get_id_by_username(our_user):
+    return alchemy_actions.read_user(our_user)
+
+
+def output_user_actions_count(alchemy_actions, our_user):
+    return alchemy_actions.output_user_actions_count(our_user)
+
+
 if __name__ == "__main__":
 
     table_name = 'calculator'
-
     again = 'y'
 
     while again == 'y':
 
         alchemy_actions = session.AlchemyActions()
-        our_user = input("Please enter your name >  ")
+        our_user = user_input()
+        output_user_actions_count(alchemy_actions, our_user)
         our_user_id = alchemy_actions.read_user_before_save(our_user)
         if not our_user_id:
             our_user_to_table = Users(our_user, 1)
@@ -79,21 +106,14 @@ if __name__ == "__main__":
         var = 1
         while var:
             var = check_wish(input())
-
-        result = False
-        while not result:
-
-            my_string = (input("Please input first number, action and second number: "))
-            my_regex = r'(^-?\d+[.]?\d+|^-?\d+)([{}])(-?\d+[.]?\d+$|-?\d+$)'.format(''.join(Calculator.actions))
-            result = re.match(my_regex, my_string)
-
-            if result:
-                first_number = float(result.group(1))
-                action = result.group(2)
-                second_number = float(result.group(3))
+        print("Please input first number, action and second number: ")
+        first_number = False
+        while not first_number:
+            my_string = input()
+            if parse_expression(my_string):
+                first_number, second_number, action = parse_expression(my_string)
                 break
             else:
-                print("Try again")
                 continue
 
         our_example = Calculator(first_number, second_number, action)
@@ -101,9 +121,11 @@ if __name__ == "__main__":
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
 
-            id_to_results = alchemy_actions.read_user(our_user)
+            id_to_results = get_id_by_username(our_user)
+
             to_alchemy_results = Results(first_number, action, second_number,
                                          our_example.calculate(), id_to_results)
+
             alchemy_actions.add_res(to_alchemy_results)
         else:
             print("It's not possible to divide by zero!")
