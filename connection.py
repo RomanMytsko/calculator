@@ -2,9 +2,12 @@ import psycopg2
 import json
 import sys
 import os
+import my_config
 
-with open(os.environ.get('CONFIG')) as file:
-    config = json.load(file)
+# CONFIG_FILE = 'config.json'
+
+# config = json.load(config.json)
+config = my_config.config
 
 if 'host' not in config.keys():
     config['host'] = '127.0.0.1'

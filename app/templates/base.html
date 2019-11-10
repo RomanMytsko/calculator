@@ -1,0 +1,16 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }} - Calculator</title>
+      {% else %}
+      <title>Welcome to calculator</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>Calculator:
+    <a href="/index">Home</a>
+    <a href="/calculate">Calculate</a></a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
