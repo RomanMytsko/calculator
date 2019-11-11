@@ -1,2 +1,2 @@
-config = {'user':'Roma','password':'thesoprano777', 'host':'127.0.0.1','port':'5432','database':"calculator_db"}
-print(type(config))
+config = {'user': 'roma', 'password': 'thesoprano777', 'host': '127.0.0.1', 'port': '5432', 'database': "calculator_db"}
+

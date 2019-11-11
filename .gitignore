@@ -3,3 +3,6 @@ pyvenv.cfg
 results.txt
 lib/
 bin/
+.idea/
+__pycache__/
+*.pyc
