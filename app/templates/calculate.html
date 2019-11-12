@@ -18,6 +18,11 @@
             {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
+        <p>
+            {{ form.result.label }}<br>
+            {{ form.expression(size=46) }}
+
+        </p>
     </form>
 
 {% endblock %}
