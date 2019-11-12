@@ -19,10 +19,11 @@
         </p>
         <p>{{ form.submit() }}</p>
         <p>
-            {{ form.result.label }}<br>
-            {{ form.expression(size=46) }}
+           <p style="color:#0000ff">
+            <b> {{ form.result.label }}<br>
+            {{ form.expression(size=20) }}
+           </b> </p>
 
-        </p>
     </form>
 
 {% endblock %}
