@@ -9,8 +9,8 @@
     <body>
         <div>
             Calculator:
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('calculate') }}">Calculate</a>
+            <a href="{{ ('/index') }}">Home</a>
+            <a href="{{ ('/calculate') }}">Calculate</a>
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}
