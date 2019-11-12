@@ -4,5 +4,5 @@ from wtforms.validators import DataRequired
 
 
 class DataForm(FlaskForm):
-    datafield = StringField('Please input first number, action and second number', validators=[DataRequired()])
+    expression = StringField('Please input first number, action and second number', validators=[DataRequired()])
     submit = SubmitField('Calculate')

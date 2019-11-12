@@ -5,9 +5,13 @@
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
-            {{ form.datafield.label }}<br>
-            {{ form.datafield(size=46) }}
+            {{ form.expression.label }}<br>
+            {{ form.expression(size=46) }}
+            {% for error in form.expression.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
     </form>
+
 {% endblock %}
