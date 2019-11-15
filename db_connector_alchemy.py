@@ -51,19 +51,18 @@ class AlchemyActions:
         if len(users) > 0:
             for user in users:
                 if our_user == user.user_name:
-                    our_user_id = user.id
+                    return user.id
                     break
                 else:
-                    our_user_id = 0
+                    return 0
         else:
-            our_user_id = 0
-        return our_user_id
+            return 0
+        return user.id
 
     def read_user(self, our_user):
         for user in self.db.session.query(Users).all():
             if our_user == user.user_name:
-                id_to_results = user.id
-                return id_to_results
+                return user.id
 
     def update_counter(self, our_user_id):
         if our_user_id:

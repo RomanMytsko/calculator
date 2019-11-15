@@ -77,12 +77,12 @@ def parse_expression(my_string):
         return False
 
 
-def get_id_by_username(our_user):
-    return alchemy_actions.read_user(our_user)
+# def get_id_by_username(our_user):
+#     return alchemy_actions.read_user(our_user)
 
 
-def output_user_actions_count(alchemy_actions, our_user):
-    return alchemy_actions.output_user_actions_count(our_user)
+# def output_user_actions_count(alchemy_actions, our_user):
+#     return alchemy_actions.output_user_actions_count(our_user)
 
 
 if __name__ == "__main__":
@@ -94,7 +94,8 @@ if __name__ == "__main__":
 
         alchemy_actions = session.AlchemyActions()
         our_user = user_input()
-        output_user_actions_count(alchemy_actions, our_user)
+        # output_user_actions_count(alchemy_actions, our_user)
+        alchemy_actions.output_user_actions_count(our_user)
         our_user_id = alchemy_actions.read_user_before_save(our_user)
         if not our_user_id:
             our_user_to_table = Users(our_user, 1)
@@ -121,7 +122,7 @@ if __name__ == "__main__":
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
 
-            id_to_results = get_id_by_username(our_user)
+            id_to_results = alchemy_actions.read_user(our_user)
 
             to_alchemy_results = Results(first_number, action, second_number,
                                          our_example.calculate(), id_to_results)
