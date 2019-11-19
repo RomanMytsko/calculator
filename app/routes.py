@@ -22,12 +22,18 @@ def calculate():
         our_expression = form.data['expression']
         our_user = form.data['user_name']
         print('this is our ex', type(our_expression))
+
         first_number, second_number, action = calc.parse_expression(our_expression)
         alchemy_action = session.AlchemyActions()
         calculator = calc.Calculator(first_number, second_number, action)
         result = calculator.calculate()
-        id_to_results = alchemy_action.read_user(our_user)
-        to_res = db.Results(first_number, action, second_number, result, id_to_results)
+        our_user_id = alchemy_action.user_id(our_user)
+        if alchemy_action.user_in_table(our_user):
+            alchemy_action.update_counter(our_user)
+        else:
+            our_user_to_table = db.Users(our_user, 1)
+            alchemy_action.add_user(our_user_to_table)
+        to_res = db.Results(first_number, action, second_number, result, our_user_id)
         alchemy_action = session.AlchemyActions()
         alchemy_action.add_res(to_res)
         return redirect('/index')
