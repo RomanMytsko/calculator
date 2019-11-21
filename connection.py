@@ -9,10 +9,12 @@ import my_config
 # config = json.load(config.json)
 config = my_config.config
 
-if 'host' not in config.keys():
-    config['host'] = '127.0.0.1'
-if 'port' not in config.keys():
-    config['port'] = '5432'
+# if 'host' not in config.keys():
+#     config['host'] = '127.0.0.1'
+# if 'port' not in config.keys():
+#     config['port'] = '5432'
+config['host'] = config.setdefault('host', '127.0.0.1')
+config['port'] = config.setdefault('port', '5432')
 
 required_keys = ['user', 'password', 'host', 'port']
 try:

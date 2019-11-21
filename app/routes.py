@@ -18,27 +18,20 @@ def index():
 def calculate():
     form = DataForm()
     if form.validate_on_submit():
-        # flash("This your's resulttt")
-        our_expression = form.data['expression']
-        our_user = form.data['user_name']
-        first_number, second_number, action = calc.parse_expression(our_expression)
+        expression = form.data['expression']
+        user = form.data['user_name']
+        first_number, second_number, action = calc.parse_expression(expression)
         alchemy_action = session.AlchemyActions()
         calculator = calc.Calculator(first_number, second_number, action)
         result = calculator.calculate()
-        our_user_id = alchemy_action.user_id(our_user)
-        if alchemy_action.user_in_table(our_user):
-            alchemy_action.update_counter(our_user)
+        user_id = alchemy_action.user_id(user)
+        if alchemy_action.user_in_table(user):
+            alchemy_action.update_counter(user)
         else:
-            our_user_to_table = db.Users(our_user, 1)
-            alchemy_action.add_user(our_user_to_table)
-        to_res = db.Results(first_number, action, second_number, result, our_user_id)
-        alchemy_action = session.AlchemyActions()
+            user_to_table = db.Users(user, 1)
+            alchemy_action.add_user(user_to_table)
+        to_res = db.Results(first_number, action, second_number, result, user_id)
+        # alchemy_action = session.AlchemyActions()
         alchemy_action.add_res(to_res)
-        return redirect('/result')
+        return redirect('/calculate')
     return render_template('calculate.html', title='Sign In', form=form)
-# new field for result
-# write our data to db (history) using existing functional
-@app.route('/result', result = 32)
-    # result = result
-def show_result():
-    return render_template('result.html')
