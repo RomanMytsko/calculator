@@ -1,18 +1,10 @@
-import psycopg2
 import json
 import sys
 import os
-import my_config
 
-# CONFIG_FILE = 'config.json'
+with open(os.environ.get('CONFIG') or '/Users/roma/prog/projects/calculator/configs.json') as file:
+    config = json.load(file)
 
-# config = json.load(config.json)
-config = my_config.config
-
-# if 'host' not in config.keys():
-#     config['host'] = '127.0.0.1'
-# if 'port' not in config.keys():
-#     config['port'] = '5432'
 config['host'] = config.setdefault('host', '127.0.0.1')
 config['port'] = config.setdefault('port', '5432')
 
@@ -24,3 +16,5 @@ try:
 except Exception:
     print(' "{}" has empty value.'.format(i))
     sys.exit()
+
+
