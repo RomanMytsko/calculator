@@ -6,3 +6,6 @@ bin/
 .idea/
 __pycache__/
 *.pyc
+.bash_profile
+my_config.py
+config.py
