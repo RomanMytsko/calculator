@@ -2,7 +2,7 @@ import json
 import sys
 import os
 
-with open(os.environ.get('CONFIG') or '/Users/roma/prog/projects/calculator/configs.json') as file:
+with open(os.environ.get('CONFIG')) as file:
     config = json.load(file)
 
 config['host'] = config.setdefault('host', '127.0.0.1')

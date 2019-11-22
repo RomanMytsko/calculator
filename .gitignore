@@ -1,7 +1,6 @@
   GNU nano 2.0.6                                            File: .gitignore                                                                                      Modified  
 
 .idea/
-__pycache__/
 *.pyc
 .bash_profile
 my_config.py
