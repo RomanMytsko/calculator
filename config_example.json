@@ -1,0 +1,2 @@
+{"user": "username", "password": "your_secret_password",
+          "port": "5432", "database": "calculator_db"}

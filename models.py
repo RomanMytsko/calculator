@@ -13,8 +13,8 @@ class Results(Base):
     action = Column('Action', String)
     second_number = Column('Second number', String)
     result = Column('Results', String)
-    user_id = Column(Integer, ForeignKey('users.id'))
-    user = relationship("Users", backref='calculator_results')
+    user_id = Column('users.id', Integer)
+    # user = relationship("Users", backref='calculator_results')
 
     def __init__(self, first_number, action, second_number, result, user_id):
         self.first_number = first_number
