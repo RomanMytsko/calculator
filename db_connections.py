@@ -14,7 +14,7 @@ class Database:
 
     def create_table(self, table_name):
 
-        cursor = connection.cursor()
+        cursor = self.connection.cursor()
         cursor.execute('''CREATE TABLE %s
                                 (action_id SERIAL PRIMARY KEY,
                                  first_number REAL NOT NULL, 

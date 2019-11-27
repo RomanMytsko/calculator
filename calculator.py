@@ -77,14 +77,6 @@ def parse_expression(my_string):
         return False
 
 
-def get_id_by_username(our_user):
-    return alchemy_actions.read_user(our_user)
-
-
-def output_user_actions_count(alchemy_actions, our_user):
-    return alchemy_actions.output_user_actions_count(our_user)
-
-
 if __name__ == "__main__":
 
     table_name = 'calculator'
@@ -94,13 +86,13 @@ if __name__ == "__main__":
 
         alchemy_actions = session.AlchemyActions()
         our_user = user_input()
-        output_user_actions_count(alchemy_actions, our_user)
-        our_user_id = alchemy_actions.read_user_before_save(our_user)
-        if not our_user_id:
+        alchemy_actions.output_user_actions_count(our_user)
+        our_user_id = alchemy_actions.user_id(our_user)
+        if alchemy_actions.user_in_table(our_user):
+            alchemy_actions.update_counter(our_user)
+        else:
             our_user_to_table = Users(our_user, 1)
             alchemy_actions.add_user(our_user_to_table)
-        else:
-            alchemy_actions.update_counter(our_user_id)
 
         print('Do you want to see history? (y/n)')
         var = 1
@@ -121,10 +113,8 @@ if __name__ == "__main__":
         if our_example.calculate():
             print("Your result is: ", round(our_example.calculate(), 4))
 
-            id_to_results = get_id_by_username(our_user)
-
             to_alchemy_results = Results(first_number, action, second_number,
-                                         our_example.calculate(), id_to_results)
+                                         our_example.calculate(), our_user_id)
 
             alchemy_actions.add_res(to_alchemy_results)
         else:

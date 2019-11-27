@@ -1,5 +1,12 @@
-1.py
-pyvenv.cfg
-results.txt
-lib/
-bin/
+  GNU nano 2.0.6                                            File: .gitignore                                                                                      Modified  
+
+.idea/
+.DS_Store
+__pycache__/
+*.pyc
+.bash_profile
+my_config.py
+config.py
+configs.json
+
+

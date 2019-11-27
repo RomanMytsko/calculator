@@ -46,30 +46,31 @@ class AlchemyActions:
         self.db.session.add(user)
         self.db.session.commit()
 
-    def read_user_before_save(self, our_user):
+    def update_counter(self, our_user):
+        for user in self.db.session.query(Users).all():
+            if our_user == user.user_name:
+                user.counter += 1
+                self.db.session.commit()
+                break
+
+    def user_in_table(self, our_user):
+        for users in self.db.session.query(Users.user_name).all():
+            for user in users:
+                if our_user == user:
+                    return True
+
+    def user_id(self, our_user):
         users = self.db.session.query(Users).all()
         if len(users) > 0:
             for user in users:
                 if our_user == user.user_name:
-                    our_user_id = user.id
+                    user_id = user.id
                     break
                 else:
-                    our_user_id = 0
+                    user_id = len(users) + 1
+            return user_id
         else:
-            our_user_id = 0
-        return our_user_id
-
-    def read_user(self, our_user):
-        for user in self.db.session.query(Users).all():
-            if our_user == user.user_name:
-                id_to_results = user.id
-                return id_to_results
-
-    def update_counter(self, our_user_id):
-        if our_user_id:
-            users = self.db.session.query(Users).get(our_user_id)
-            users.counter += 1
-            self.db.session.commit()
+            return 1
 
     def output_user_actions_count(self, our_user):
         var = False
@@ -79,7 +80,4 @@ class AlchemyActions:
                 print(our_user, str_to_print)
                 var = True
         if not var:
-            str_to_print = ", you didn't do any actions before!"
-            print(our_user, str_to_print)
-        return str_to_print
-
+            return print(our_user, ", you didn't do any actions before!")
