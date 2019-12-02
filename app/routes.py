@@ -1,7 +1,6 @@
-from flask import render_template
 from app import app
 from app.forms import DataForm
-from flask import render_template, flash, redirect
+from flask import render_template
 import calculator as calc
 import models as db
 import db_connector_alchemy as session
@@ -31,5 +30,7 @@ def calculate():
             alchemy_action.add_user(user_to_table)
         to_res = db.Results(first_number, action, second_number, result, user_id)
         alchemy_action.add_res(to_res)
-        return redirect('/calculate')
-    return render_template('calculate.html', title='Sign In', form=form)
+
+        return render_template('show_result.html', user=user, result=result, expression=expression)
+
+    return render_template('calculate.html', form=form)

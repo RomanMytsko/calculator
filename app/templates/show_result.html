@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<html>
+<head>
+    <style>
+        table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h3>You can check your result if don't believe me!)</h3>
+
+
+<table style="width:60%">
+    <tr>
+        <th>User</th>
+        <th>Expression</th>
+        <th>Result</th>
+    </tr>
+    <tr>
+        <td>{{ user }}</td>
+        <td>{{ expression }}</td>
+        <td>{{ result }}</td>
+    </tr>
+
+
+</table>
+
+
+</body>
+</html>
+{% endblock %}
+
