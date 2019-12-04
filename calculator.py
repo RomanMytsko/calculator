@@ -59,8 +59,8 @@ def check_wish(wish):
 
 
 def user_input():
-    our_user = input("Please enter your name >  ")
-    return our_user
+    user = input("Please enter your name >  ")
+    return user
 
 
 def parse_expression(my_string):
