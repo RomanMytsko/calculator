@@ -53,13 +53,11 @@ def test_calculate():
 
 
 def test_regex():
-    assert calculator.our_data('1+2') == (1, 2, '+')
-    assert calculator.our_data('4/7') == (4, 7, '/')
-    assert calculator.our_data('123.3-0') == (123.3, 0, '-')
-    assert calculator.our_data('0.1*5') == (0.1, 5, '*')
-    assert calculator.our_data('0jhg') == (False)
-
-
+    assert calculator.parse_expression('1+2') == (1, 2, '+')
+    assert calculator.parse_expression('4/7') == (4, 7, '/')
+    assert calculator.parse_expression('123.3-0') == (123.3, 0, '-')
+    assert calculator.parse_expression('0.1*5') == (0.1, 5, '*')
+    assert calculator.parse_expression('0jhg') == False
 
 
 #
@@ -72,17 +70,17 @@ def test_regex():
 #     # assert res == 100500
 
 
-@patch('db_connector_alchemy.AlchemyActions.utput_user_actions_count')
-def output_user_actions_count(print_string):
+@patch('db_connector_alchemy.AlchemyActions.output_user_actions_count')
+def test_output_user_actions_count(print_string):
     print_string.return_value = ' you did 39 actions before!'
     alchemy_actions = session.AlchemyActions()
-    r = calculator.printing_sum_of_user_actions(alchemy_actions, 'roman')
+    r = alchemy_actions.output_user_actions_count('roman')
     assert r == ' you did 39 actions before!'
 
-@patch('calculator.our_user_string.our_user')
+@patch('calculator.user_input')
 def test_user_input(some_text):
-    calculator.our_user.return_value = 'roman'
-    our_user = calculator.our_user()
+    calculator.user_input.return_value = 'roman'
+    our_user = calculator.user_input()
     assert our_user == 'roman'
 
 if __name__ == '__main__':
