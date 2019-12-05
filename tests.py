@@ -46,10 +46,6 @@ def test_calculate():
     assert r.calculate() == r.division()
 
 
-# @patch('db_connector_alchemy.SQLAlchemyDBConnection')
-# def test_connection(db):
-#     conn = db_connector_alchemy.AlchemyActions()
-#     assert 1 == 1
 
 
 def test_regex():
@@ -59,15 +55,6 @@ def test_regex():
     assert calculator.parse_expression('0.1*5') == (0.1, 5, '*')
     assert calculator.parse_expression('0jhg') == False
 
-
-#
-# @patch('db_connector_alchemy.AlchemyActions.read_user')
-# def test_get_id_by_username(read_user):
-#     # read_user.return_value = 100500
-#     alchemy_actions = session.AlchemyActions()
-#     res, a = calculator.get_id_by_username('roman')
-#     assert a == 81
-#     # assert res == 100500
 
 
 @patch('db_connector_alchemy.AlchemyActions.output_user_actions_count')
