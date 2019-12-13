@@ -1,5 +1,5 @@
-import os.path
-import psycopg2
+# import os.path
+# import psycopg2
 import re
 import db_connector_alchemy as session
 from models import Results, Users
