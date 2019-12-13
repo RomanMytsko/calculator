@@ -7,7 +7,7 @@ database = "calculator_db"
 conn_str = ('postgresql://{}:{}@{}/{}'.format(config["user"], config["password"], config["host"], database))
 
 
-class SQLAlchemyDBConnection(object):
+class SQLAlchemyDBConnection:
 
     def __init__(self, connection_string):
         self.connection_string = connection_string

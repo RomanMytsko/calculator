@@ -1,6 +1,5 @@
 import unittest
 from calculator import Calculator, check_input_num
-import db_connector_alchemy
 from unittest.mock import patch
 import calculator
 import db_connector_alchemy as session
@@ -46,15 +45,12 @@ def test_calculate():
     assert r.calculate() == r.division()
 
 
-
-
 def test_regex():
     assert calculator.parse_expression('1+2') == (1, 2, '+')
     assert calculator.parse_expression('4/7') == (4, 7, '/')
     assert calculator.parse_expression('123.3-0') == (123.3, 0, '-')
     assert calculator.parse_expression('0.1*5') == (0.1, 5, '*')
     assert calculator.parse_expression('0jhg') == False
-
 
 
 @patch('db_connector_alchemy.AlchemyActions.output_user_actions_count')
@@ -64,11 +60,13 @@ def test_output_user_actions_count(print_string):
     r = alchemy_actions.output_user_actions_count('roman')
     assert r == ' you did 39 actions before!'
 
+
 @patch('calculator.user_input')
 def test_user_input(some_text):
     calculator.user_input.return_value = 'roman'
     our_user = calculator.user_input()
     assert our_user == 'roman'
+
 
 if __name__ == '__main__':
     unittest.main()
