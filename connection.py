@@ -16,5 +16,3 @@ try:
 except Exception:
     print(' "{}" has empty value.'.format(i))
     sys.exit()
-
-

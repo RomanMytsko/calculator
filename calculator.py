@@ -77,7 +77,7 @@ def parse_expression(my_string):
 
 if __name__ == "__main__":
 
-    table_name = 'calculator'
+    # table_name = 'calculator'
     again = 'y'
 
     while again == 'y':
